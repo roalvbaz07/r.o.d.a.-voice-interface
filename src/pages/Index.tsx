@@ -5,15 +5,6 @@ import { TranscriptionDisplay } from '@/components/TranscriptionDisplay';
 import { AudioVisualizer } from '@/components/AudioVisualizer';
 import { useVoiceRecognition } from '@/hooks/useVoiceRecognition';
 import { useToast } from '@/hooks/use-toast';
-import { ElevenLabsClient } from "elevenlabs"; //
-
-// Configuración del cliente de ElevenLabs
-// Nota: En producción, usa variables de entorno (import.meta.env.VITE_ELEVENLABS_API_KEY)
-const elevenlabs = new ElevenLabsClient({
-  apiKey: "agent_5901kfx6dv3jegqbnc3ah2e01sfg", 
-});
-
-const RODA_VOICE_ID = "21m00Tcm4TlvDq8ikWAM"; // ID de voz de ejemplo (Rachel), cámbialo por el de R.O.D.A
 
 interface Message {
   id: string;
@@ -42,52 +33,27 @@ const Index = () => {
       setMessages(prev => [...prev, userMessage]);
       setCurrentTranscript('');
       
-      // 2. Estado de procesamiento (Orbe girando)
+      // 2. Cambiar a estado de procesamiento (animación de giro)
       setOrbState('processing');
 
       try {
-        // 3. Llamada a ElevenLabs para generar el audio
-        const audioStream = await elevenlabs.generate({
-          voice: RODA_VOICE_ID,
-          text: `Entendido. Estoy procesando tu mensaje: ${transcript}`,
-          model_id: "eleven_multilingual_v2"
-        });
-
-        // 4. Convertir el stream a un objeto que el navegador pueda reproducir
-        const chunks: Uint8Array[] = [];
-        for await (const chunk of audioStream as any) {
-          chunks.push(chunk);
-        }
-        const audioBlob = new Blob(chunks, { type: 'audio/mpeg' });
-        const audioUrl = URL.createObjectURL(audioBlob);
-        const audio = new Audio(audioUrl);
-
-        // 5. Reproducir audio y actualizar UI
-        audio.onplay = () => {
-          // Opcional: podrías cambiar el estado aquí si quieres una animación específica mientras habla
-        };
-
-        audio.onended = () => {
-          setOrbState('idle'); // El orbe vuelve a morado al terminar
-          URL.revokeObjectURL(audioUrl); // Limpieza de memoria
-        };
-
-        await audio.play();
-
+        // Simulación de respuesta de la IA (puedes conectar un webhook aquí luego)
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        
         const rodaResponse: Message = {
           id: crypto.randomUUID(),
           type: 'roda',
-          text: `Respuesta de R.O.D.A generada por ElevenLabs para: "${transcript}"`,
+          text: `He recibido tu mensaje: "${transcript}". El sistema está listo para ser integrado.`,
           timestamp: new Date(),
         };
         
         setMessages(prev => [...prev, rodaResponse]);
+        setOrbState('idle'); // El orbe vuelve a morado
       } catch (error) {
-        console.error("Error en la llamada a ElevenLabs:", error);
         toast({
           variant: 'destructive',
-          title: 'Error de ElevenLabs',
-          description: 'No se pudo generar la voz de R.O.D.A',
+          title: 'Error',
+          description: 'No se pudo procesar la solicitud',
         });
         setOrbState('idle');
       }
@@ -132,7 +98,7 @@ const Index = () => {
       setOrbState('idle');
     } else {
       startListening();
-      setOrbState('listening'); // Cambia a verde
+      setOrbState('listening'); // Orbe en verde
     }
   }, [isListening, isSupported, startListening, stopListening, toast]);
 
@@ -172,7 +138,7 @@ const Index = () => {
 
       <footer className="py-4 text-center">
         <p className="text-xs font-mono text-muted-foreground/40">
-          Presiona el orbe para iniciar • Powered by ElevenLabs
+          Presiona el orbe para iniciar
         </p>
       </footer>
     </div>

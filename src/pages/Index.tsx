@@ -10,7 +10,7 @@ import { ElevenLabsClient } from "elevenlabs"; //
 // Configuración del cliente de ElevenLabs
 // Nota: En producción, usa variables de entorno (import.meta.env.VITE_ELEVENLABS_API_KEY)
 const elevenlabs = new ElevenLabsClient({
-  apiKey: "TU_API_KEY_AQUI", 
+  apiKey: "agent_5901kfx6dv3jegqbnc3ah2e01sfg", 
 });
 
 const RODA_VOICE_ID = "21m00Tcm4TlvDq8ikWAM"; // ID de voz de ejemplo (Rachel), cámbialo por el de R.O.D.A

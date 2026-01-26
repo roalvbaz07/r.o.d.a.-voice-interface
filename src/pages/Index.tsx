@@ -23,7 +23,7 @@ const Index = () => {
     setCurrentTranscript(transcript);
 
     if (isFinal && transcript.trim()) {
-      // 1. Añadir mensaje del usuario
+      // Añadir mensaje del usuario a la lista
       const userMessage: Message = {
         id: crypto.randomUUID(),
         type: 'user',
@@ -33,17 +33,18 @@ const Index = () => {
       setMessages(prev => [...prev, userMessage]);
       setCurrentTranscript('');
       
-      // 2. Cambiar a estado de procesamiento (animación de giro)
+      // Cambiar a estado de procesamiento (animación de giro)
       setOrbState('processing');
 
       try {
-        // Simulación de respuesta de la IA (puedes conectar un webhook aquí luego)
+        // Simulación de espera de respuesta
         await new Promise(resolve => setTimeout(resolve, 2000));
         
+        // Mensaje simulado de R.O.D.A
         const rodaResponse: Message = {
           id: crypto.randomUUID(),
           type: 'roda',
-          text: `He recibido tu mensaje: "${transcript}". El sistema está listo para ser integrado.`,
+          text: `He recibido tu mensaje: "${transcript}". Estoy procesando tu solicitud.`,
           timestamp: new Date(),
         };
         
@@ -98,12 +99,13 @@ const Index = () => {
       setOrbState('idle');
     } else {
       startListening();
-      setOrbState('listening'); // Orbe en verde
+      setOrbState('listening'); // Orbe en verde mientras escucha
     }
   }, [isListening, isSupported, startListening, stopListening, toast]);
 
   return (
     <div className="min-h-screen flex flex-col relative overflow-hidden">
+      {/* Efectos de fondo */}
       <div className="fixed inset-0 pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-roda-purple/5 rounded-full blur-3xl" />
         <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-primary/5 rounded-full blur-3xl" />

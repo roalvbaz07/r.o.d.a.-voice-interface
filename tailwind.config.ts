@@ -93,9 +93,13 @@ export default {
           from: { transform: "rotate(0deg)" },
           to: { transform: "rotate(360deg)" },
         },
+        "spin-reverse-slow": {
+          from: { transform: "rotate(360deg)" },
+          to: { transform: "rotate(0deg)" },
+        },
         "ring-expand": {
           "0%": { transform: "scale(1)", opacity: "0.6" },
-          "100%": { transform: "scale(2)", opacity: "0" },
+          "100%": { transform: "scale(2.5)", opacity: "0" },
         },
         "blink": {
           "0%, 50%": { opacity: "1" },
@@ -119,8 +123,9 @@ export default {
         "accordion-up": "accordion-up 0.2s ease-out",
         "pulse-slow": "pulse-slow 3s ease-in-out infinite",
         "pulse-fast": "pulse-fast 0.8s ease-in-out infinite",
-        "spin-slow": "spin-slow 3s linear infinite",
-        "ring-expand": "ring-expand 1.5s ease-out infinite",
+        "spin-slow": "spin-slow 12s linear infinite",
+        "spin-reverse-slow": "spin-reverse-slow 15s linear infinite",
+        "ring-expand": "ring-expand 2.1s ease-out infinite",
         "blink": "blink 1s step-end infinite",
         "wave": "wave 0.5s ease-in-out infinite",
         "float": "float 3s ease-in-out infinite",
